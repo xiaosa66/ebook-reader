@@ -2,6 +2,10 @@
 
 > A Vue.js project
 
+# 介绍
+
+一个web应用,可以用来看电子书
+
 ## Build Setup
 
 ``` bash
