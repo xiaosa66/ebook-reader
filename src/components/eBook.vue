@@ -1,33 +1,42 @@
 <template>
     <div class="ebook-container">
-        <div id="read"></div>
-        <div class="title-wrapper" v-show="ifTitleAndMenuSHow">
-            <div class="left">
-                <span class="icon-shouye">首页</span>
+        <transition name="slide-down">
+            <div class="title-wrapper" v-show="ifTitleAndMenuSHow">
+                <div class="left">
+                    <span class="icon-shouye">首页</span>
+                </div>
+                <div class="right">
+                    <div class="icon-wrapper">
+                        <span class="icon-cart">购物车</span>
+                    </div>
+                    <div class="icon-wrapper">
+                        <span class="icon-cart">个人</span>
+                    </div>
+                    <div class="icon-wrapper">
+                        <span class="icon-cart">更多</span>
+                    </div>
+                </div>
             </div>
-            <div class="right">
-                <div class="icon-wrapper">
-                    <span class="icon-cart">购物车</span>
-                </div>
-                <div class="icon-wrapper">
-                    <span class="icon-cart">个人</span>
-                </div>
-                <div class="icon-wrapper">
-                    <span class="icon-cart">更多</span>
-                </div>
+        </transition>
+
+        <div class="readwrapper">
+            <div id="read"></div>
+            <div class="mask">
+                <div class="left" v-on:click="prevPage"></div>
+                <div class="center" v-on:click="toogleTitleAndMenu"></div>
+                <div class="right" v-on:click="nextPage"></div>
             </div>
+
         </div>
-        <div class="mask">
-            <div class="left" v-on:click="prevPage"></div>
-            <div class="center" v-on:click="toogleTitleAndMenu"></div>
-            <div class="right" v-on:click="nextPage"></div>
-        </div>
-        <div class="menu-wrapper" v-show="ifTitleAndMenuSHow">
-            <div class="icon-wrapper">章节</div>
-            <div class="icon-wrapper">进度</div>
-            <div class="icon-wrapper">亮度</div>
-            <div class="icon-wrapper">字体</div>
-        </div>
+        <transition name="slide-up">
+            <div class="menu-wrapper" v-show="ifTitleAndMenuSHow">
+                <div class="icon-wrapper">章节</div>
+                <div class="icon-wrapper">进度</div>
+                <div class="icon-wrapper">亮度</div>
+                <div class="icon-wrapper">字体</div>
+            </div>
+        </transition>
+
     </div>
 </template>
 <script>
@@ -127,6 +136,24 @@ mounted(){
             flex: 0 0 px2rem(60);
             }
         }
+            &.slide-down-enter {
+                transform: translate3d(0,-100%,0)
+            }
+            &.slide-down-enter-to {
+                transform: translate3d(0,0,0)
+            }
+            &.slide-down-enter-active {
+                transition: all 0.3s linear;
+            }
+            &.slide-down-leave {
+                transform: translate3d(0,0,0)
+            }
+            &.slide-down-leave-to {
+                transform: translate3d(0,-100%,0)
+            }
+            &.slide-down-leave-active {
+                transition: all 0.3s linear;
+            }
 
     }
     .menu-wrapper {
@@ -145,6 +172,24 @@ mounted(){
             @include center;
             // flex: 0 0 px2rem(250);
             flex: 1;
+            }
+            &.slide-up-enter {
+                transform: translate3d(0,100%,0)
+            }
+            &.slide-up-enter-to {
+                transform: translate3d(0,0,0)
+            }
+            &.slide-up-enter-active {
+                transition: all 0.3s linear;
+            }
+            &.slide-up-leave {
+                transform: translate3d(0,0,0)
+            }
+            &.slide-up-leave-to {
+                transform: translate3d(0,100%,0)
+            }
+            &.slide-up-leave-active {
+                transition: all 0.3s linear;
             }
     }
 }
