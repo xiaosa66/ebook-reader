@@ -22,6 +22,12 @@
             <div class="center"></div>
             <div class="right" v-on:click="nextPage"></div>
         </div>
+        <div class="menu-wrapper">
+            <div class="icon-wrapper">章节</div>
+            <div class="icon-wrapper">进度</div>
+            <div class="icon-wrapper">亮度</div>
+            <div class="icon-wrapper">字体</div>
+        </div>
     </div>
 </template>
 <script>
@@ -86,6 +92,50 @@ mounted(){
         .right{
             flex:0 0 px2rem(100);
         }
+    }
+     .title-wrapper {
+        color:#333;
+        font-size: 20px;
+        position: absolute;
+        display: flex;
+        box-shadow: 0 px2rem(8) px2rem(8) rgba($color: #000000, $alpha: 0.15);
+        z-index: 101;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: px2rem(60);
+        // background: yellow;
+
+        .left {
+            flex: 0 0 px2rem(60);
+            @include center;
+        }
+        .right {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            .icon-wrapper {
+            @include center;
+            flex: 0 0 px2rem(60);
+            }
+        }
+
+    }
+    .menu-wrapper {
+        color:#333;
+        font-size: 20px;
+        position: absolute;
+        display: flex;
+        box-shadow: 0 px2rem(-8) px2rem(8) rgba($color: #000000, $alpha: 0.15);
+        z-index: 101;
+        bottom:0;
+        left: 0;
+        width: 100%;
+        height: px2rem(60);
+        .icon-wrapper {
+            @include center;
+            flex: 0 0 px2rem(250);
+            }
     }
 }
 
