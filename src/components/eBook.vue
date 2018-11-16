@@ -1,7 +1,7 @@
 <template>
     <div class="ebook-container">
         <div id="read"></div>
-        <div class="title-wrapper">
+        <div class="title-wrapper" v-show="ifTitleAndMenuSHow">
             <div class="left">
                 <span class="icon-shouye">首页</span>
             </div>
@@ -19,10 +19,10 @@
         </div>
         <div class="mask">
             <div class="left" v-on:click="prevPage"></div>
-            <div class="center"></div>
+            <div class="center" v-on:click="toogleTitleAndMenu"></div>
             <div class="right" v-on:click="nextPage"></div>
         </div>
-        <div class="menu-wrapper">
+        <div class="menu-wrapper" v-show="ifTitleAndMenuSHow">
             <div class="icon-wrapper">章节</div>
             <div class="icon-wrapper">进度</div>
             <div class="icon-wrapper">亮度</div>
@@ -37,6 +37,11 @@ let page = null;
 const DOWNLOAD_URL = '/static/hongFuYeBen.epub';
 export default {
 name: 'eBook',
+data(){
+    return{
+      ifTitleAndMenuSHow:false  
+    } 
+},
 methods: {
     // TODO 如果有一个方法没有识别    所有的方法都不起效
     prevPage () {
@@ -59,6 +64,9 @@ methods: {
         })
         this.rendition.display();
     },
+    toogleTitleAndMenu(){
+        this.ifTitleAndMenuSHow = !this.ifTitleAndMenuSHow;
+    }
 
 },
 mounted(){
@@ -104,7 +112,7 @@ mounted(){
         left: 0;
         width: 100%;
         height: px2rem(60);
-        // background: yellow;
+        background: white;
 
         .left {
             flex: 0 0 px2rem(60);
@@ -132,9 +140,11 @@ mounted(){
         left: 0;
         width: 100%;
         height: px2rem(60);
+        background: white;
         .icon-wrapper {
             @include center;
-            flex: 0 0 px2rem(250);
+            // flex: 0 0 px2rem(250);
+            flex: 1;
             }
     }
 }
