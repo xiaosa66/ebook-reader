@@ -86,7 +86,6 @@ mounted(){
 </script>
 <style lang='scss' scoped>
 @import '@/assets/styles/global.scss';
-// @import 'src/assets/styles/iconfont.css';
 
 .ebook-container {
     position: relative;
@@ -136,15 +135,7 @@ mounted(){
             flex: 0 0 px2rem(60);
             }
         }
-            &.slide-down-enter,&.slide-down-leave-to {
-                transform: translate3d(0,-100%,0)
-            }
-            &.slide-down-enter-to,&.slide-down-leave {
-                transform: translate3d(0,0,0)
-            }
-            &.slide-down-enter-active,&.slide-down-leave-active {
-                transition: all 0.3s linear;
-            }
+
 
 
     }
@@ -165,15 +156,7 @@ mounted(){
             // flex: 0 0 px2rem(250);
             flex: 1;
             }
-            &.slide-up-enter,&.slide-up-leave-to {
-                transform: translate3d(0,100%,0)
-            }
-            &.slide-up-enter-to,&.slide-up-leave {
-                transform: translate3d(0,0,0)
-            }
-            &.slide-up-enter-active,&.slide-up-leave-active {
-                transition: all 0.3s linear;
-            }
+
     }
 }
 
