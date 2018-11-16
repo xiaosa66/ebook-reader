@@ -1,24 +1,6 @@
 <template>
     <div class="ebook-container">
-        <transition name="slide-down">
-            <div class="title-wrapper" v-show="ifTitleAndMenuSHow">
-                <div class="left">
-                    <span class="icon-shouye">首页</span>
-                </div>
-                <div class="right">
-                    <div class="icon-wrapper">
-                        <span class="icon-cart">购物车</span>
-                    </div>
-                    <div class="icon-wrapper">
-                        <span class="icon-cart">个人</span>
-                    </div>
-                    <div class="icon-wrapper">
-                        <span class="icon-cart">更多</span>
-                    </div>
-                </div>
-            </div>
-        </transition>
-
+        <title-bar :ifTitleAndMenuSHow="ifTitleAndMenuSHow"></title-bar>
         <div class="readwrapper">
             <div id="read"></div>
             <div class="mask">
@@ -28,24 +10,22 @@
             </div>
 
         </div>
-        <transition name="slide-up">
-            <div class="menu-wrapper" v-show="ifTitleAndMenuSHow">
-                <div class="icon-wrapper">章节</div>
-                <div class="icon-wrapper">进度</div>
-                <div class="icon-wrapper">亮度</div>
-                <div class="icon-wrapper">字体</div>
-            </div>
-        </transition>
-
+        <menu-bar :ifTitleAndMenuSHow="ifTitleAndMenuSHow"></menu-bar>
     </div>
 </template>
 <script>
 import Epub from 'epubjs';
+import TitleBar from '@/components/TitleBar';
+import MenuBar from '@/components/MenuBar';
 global.Epub = Epub;
 let page = null;
 const DOWNLOAD_URL = '/static/hongFuYeBen.epub';
 export default {
 name: 'eBook',
+components:{
+    TitleBar,
+    MenuBar
+},
 data(){
     return{
       ifTitleAndMenuSHow:false  
@@ -109,55 +89,8 @@ mounted(){
             flex:0 0 px2rem(100);
         }
     }
-     .title-wrapper {
-        color:#333;
-        font-size: 20px;
-        position: absolute;
-        display: flex;
-        box-shadow: 0 px2rem(8) px2rem(8) rgba($color: #000000, $alpha: 0.15);
-        z-index: 101;
-        top:0;
-        left: 0;
-        width: 100%;
-        height: px2rem(60);
-        background: white;
-
-        .left {
-            flex: 0 0 px2rem(60);
-            @include center;
-        }
-        .right {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            .icon-wrapper {
-            @include center;
-            flex: 0 0 px2rem(60);
-            }
-        }
 
 
-
-    }
-    .menu-wrapper {
-        color:#333;
-        font-size: 20px;
-        position: absolute;
-        display: flex;
-        box-shadow: 0 px2rem(-8) px2rem(8) rgba($color: #000000, $alpha: 0.15);
-        z-index: 101;
-        bottom:0;
-        left: 0;
-        width: 100%;
-        height: px2rem(60);
-        background: white;
-        .icon-wrapper {
-            @include center;
-            // flex: 0 0 px2rem(250);
-            flex: 1;
-            }
-
-    }
 }
 
 </style>
