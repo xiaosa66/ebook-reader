@@ -2,7 +2,7 @@
 <div class="ebook-container">
     <div id="read"></div>
     <div class="mask">
-        <div class="left" v-on:click="prevPage"></div>
+        <div class="left" v-on:click="consoletips"></div>
         <div class="center"></div>
         <div class="right" v-on:click="nextPage"></div>
     </div>
@@ -11,16 +11,17 @@
 <script>
 import Epub from 'epubjs';
 global.Epub = Epub;
+let page = null;
 const DOWNLOAD_URL = '/static/hongFuYeBen.epub';
 export default {
 name: 'eBook',
-methods:{
-        prevPage(){
+methods: {
+    prevPage: function () {
         if(this.rendition){
-            this.rendition.prev();
-        }
+                this.rendition.prev();
+            }
     },
-    nextpage(){
+    nextPage:function () {
         if(this.rendition){
             this.rendition.next();
             console.log('next')
@@ -35,10 +36,14 @@ methods:{
         })
         this.rendition.display();
     },
+    consoletips(){
+        console.log("fadsadsfas");
+    }
 
 },
 mounted(){
-    this.showEpub();
+    page = this;
+    page.showEpub();
     }
 }
 </script>
