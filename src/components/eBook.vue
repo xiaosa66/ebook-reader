@@ -1,12 +1,28 @@
 <template>
-<div class="ebook-container">
-    <div id="read"></div>
-    <div class="mask">
-        <div class="left" v-on:click="prevPage"></div>
-        <div class="center"></div>
-        <div class="right" v-on:click="nextPage"></div>
+    <div class="ebook-container">
+        <div id="read"></div>
+        <div class="title-wrapper">
+            <div class="left">
+                <span class="icon-shouye">首页</span>
+            </div>
+            <div class="right">
+                <div class="icon-wrapper">
+                    <span class="icon-cart">购物车</span>
+                </div>
+                <div class="icon-wrapper">
+                    <span class="icon-cart">个人</span>
+                </div>
+                <div class="icon-wrapper">
+                    <span class="icon-cart">更多</span>
+                </div>
+            </div>
+        </div>
+        <div class="mask">
+            <div class="left" v-on:click="prevPage"></div>
+            <div class="center"></div>
+            <div class="right" v-on:click="nextPage"></div>
+        </div>
     </div>
-</div>
 </template>
 <script>
 import Epub from 'epubjs';
@@ -47,6 +63,8 @@ mounted(){
 </script>
 <style lang='scss' scoped>
 @import '@/assets/styles/global.scss';
+// @import 'src/assets/styles/iconfont.css';
+
 .ebook-container {
     position: relative;
 
@@ -58,9 +76,6 @@ mounted(){
         width:100%;
         height: 100%;
         z-index: 100;
-        // background-color:green;
-    /*  */
-    /* background-color:rgba(0,0,0,0.5); */
 
         .left{
             flex:0 0 px2rem(100);
