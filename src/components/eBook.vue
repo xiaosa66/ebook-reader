@@ -18,6 +18,8 @@
       :themeList='themeList'
       :defaultTheme='defaultTheme'
       @setTheme='setTheme'
+      :bookAvailable="bookAvailable"
+      @onProgressChange='onProgressChange'
       ref="menuBar"></menu-bar>
   </div>
 </template>
@@ -88,6 +90,8 @@
           }
         ],
         defaultTheme: 0,
+        // 表示图书进度条是否已经可用
+        bookAvailable:false,
 
       }
     },
@@ -124,6 +128,14 @@
         // 注册主题
         this.registerTheme();
         this.setTheme(this.defaultTheme);
+        //获取locations对象
+        this.book.ready.then(()=>{
+          return this.book.locations.generate()
+        }).then(result => {
+          this.locations = this.book.locations;
+          this.bookAvailable = true;
+          this.onProgressChange(100);
+        })
 
 
       },
@@ -147,14 +159,18 @@
           this.themes.register(theme.name, theme.style);
         })
       },
-
-
       //切换主题
       setTheme(index) {
         console.log('eBookIndex:',index)
         this.themes.select(this.themeList[index].name);
         this.defaultTheme = index;
-      }
+      },
+      // params   progress  进度条数值  (0 ~ 100)
+      onProgressChange(progress){
+        const percentage = progress/100;
+        const location = percentage > 0 ? this.locations.cfiFromPercentage(percentage) : 0;
+        this.rendition.display(location)
+      },
 
 
     },

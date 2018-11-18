@@ -18,10 +18,17 @@ import { fail } from 'assert';
             <div class="text"></div>
           </div>
         </div>
-        <div class="setting-process" v-else-if="showTag === 2">
-          <div class="setting-theme-item">
-            <div class="preview"></div>
-            <div class="text"></div>
+        <div class="setting-progress" v-else-if="showTag === 2">
+          <div class="progress-wrapper">
+            <input class="progress" type="range" max="100"
+                   min="0" step="1"
+                   @change="onProcessChange($event.target.value)"
+                   @input="onProgressInput($event.target.value)"
+                   :value="progress" :disabled="!bookAvailable"
+                    ref="progress">
+          </div>
+          <div class="text-wrapper">
+            <span>{{bookAvailable ? progress + '%' : '加载中...'}}</span>
           </div>
         </div>
         <div class="setting-theme" v-if="showTag === 3">
@@ -69,7 +76,8 @@ import { fail } from 'assert';
       themeList: {
         type: Array
       },
-      defaultTheme: Number
+      defaultTheme: Number,
+      bookAvailable:Boolean,
     },
 
     data() {
@@ -92,8 +100,15 @@ import { fail } from 'assert';
         this.$emit('setFontSize', fontSize);
       },
       setTheme(index) {
-        console.log('setTheme index:',index);
+        console.log('setTheme index:', index);
         this.$emit('setTheme', index);
+      },
+      onProcessChange(progress){
+        this.$emit('onProcessChange',progress);
+      },
+      onProgressInput(progress){
+        this.progress = progress;
+        this.$refs.progress.style.backgroundSize = `${this.progress}%100`;
       }
     }
   }
@@ -103,6 +118,7 @@ import { fail } from 'assert';
   @import '../assets/styles/global';
 
   .menu-bar {
+
     .menu-wrapper {
       color: #333;
       font-size: 20px;
@@ -134,6 +150,22 @@ import { fail } from 'assert';
       background: white;
       border-bottom: px2rem(1) dashed #ccc;
       box-shadow: 0 px2rem(-8) px2rem(8) rgba($color: #000000, $alpha: 0.15);
+      setting-chapter {}
+      .setting-progress {
+        position: relative;
+        width: 100%;
+        height: px2rem(2);
+        -webkit-appearance: none;
+        background: -webkit-linear-gradient(#999,#999) no-repeat #ddd;
+        background-size: 0 100%;
+        &:focus{
+          outline:none;
+        }
+        &::-webkit-slider-thumb{
+          -webkit-appearance: none;
+          height: px2rem(30);
+        };
+      }
       .setting-font-size {
         display: flex;
         height: 100%;
@@ -211,6 +243,7 @@ import { fail } from 'assert';
           .preview {
             flex: 1;
             border-radius: px2rem(6);
+            box-sizing: border-box;
           }
           .text {
             flex: 0 0 px2rem(20);
