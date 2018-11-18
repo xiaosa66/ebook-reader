@@ -43,7 +43,45 @@ data(){
           {fontSize:22},
           {fontSize:24},
           ],
-          defaultFontSize:16
+          defaultFontSize:16,
+          themeList:[
+              {
+                  name:'default',
+                  style:{
+                      body:{
+                          'color':'#000',
+                          'background':'#fff'
+                      }
+                }
+              },
+              {
+                  name:'eye',
+                  style:{
+                      body:{
+                          'color':'#000',
+                          'background':'#ceeaba'
+                      }
+                }
+              },
+              {
+                  name:'night',
+                  style:{
+                      body:{
+                          'color':'#eee',
+                          'background':'#333'
+                      }
+                }
+              },
+              {
+                  name:'love',
+                  style:{
+                      body:{
+                          'color':'#000',
+                          'background':'pink'
+                      }
+                }
+              }
+          ]
     } 
 },
 methods: {
@@ -75,7 +113,12 @@ methods: {
         // 获取theme对象
         this.themes = this.rendition.themes;
         // 获取默认字体
-        this.setFontSize(defaultFontSize);
+        this.setFontSize(this.defaultFontSize);
+        // 注册主题
+        this.registerTheme();
+        //切换主题
+        this.themes.select('love');
+
     },
     // 切换是否展示上下bar
     toogleTitleAndMenu(){
@@ -90,6 +133,11 @@ methods: {
         if(this.themes){
             this.themes.fontSize(fontSize + 'px');
         }
+    },
+    registerTheme(){
+        this.themeList.forEach(theme => {
+            this.themes.register(theme.name,theme.style);
+        })
     }
 
 
