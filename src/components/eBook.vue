@@ -10,7 +10,12 @@
             </div>
 
         </div>
-        <menu-bar :ifTitleAndMenuSHow="ifTitleAndMenuSHow" ref="menuBar"></menu-bar>
+        <menu-bar 
+        :ifTitleAndMenuSHow="ifTitleAndMenuSHow"  
+        :fontSizeList = "fontSizeList"
+        :defaultFontSize = "defaultFontSize"
+        @setFontSize = "setFontSize"
+        ref="menuBar"></menu-bar>
     </div>
 </template>
 <script>
@@ -28,36 +33,65 @@ components:{
 },
 data(){
     return{
-      ifTitleAndMenuSHow:false  
+      ifTitleAndMenuSHow:false,
+      fontSizeList:[
+          {fontSize:12},
+          {fontSize:14},
+          {fontSize:16},
+          {fontSize:18},
+          {fontSize:20},
+          {fontSize:22},
+          {fontSize:24},
+          ],
+          defaultFontSize:16
     } 
 },
 methods: {
     // TODO 如果有一个方法没有识别    所有的方法都不起效
+
+    // 翻页功能
     prevPage () {
         if(this.rendition){
                 this.rendition.prev();
             }
     },
+    
     nextPage () {
         if(this.rendition){
             this.rendition.next();
             console.log('next')
         }
     },
+    // 展示
     showEpub (){
+        // 获取到书籍
         this.book = new Epub(DOWNLOAD_URL);
+        // 展示书籍
         this.rendition = this.book.renderTo('read',{
             width:window.innerWidth,
             height:window.innerHeight,
         })
         this.rendition.display();
+        // 获取theme对象
+        this.themes = this.rendition.themes;
+        // 获取默认字体
+        this.setFontSize(defaultFontSize);
     },
+    // 切换是否展示上下bar
     toogleTitleAndMenu(){
         this.ifTitleAndMenuSHow = !this.ifTitleAndMenuSHow;
         if(!this.ifTitleAndMenuSHow){
             this.$refs.menuBar.hideSetting();
+        };
+    },
+    // 设置字体大小
+    setFontSize(fontSize){
+        this.defaultFontSize =  fontSize;
+        if(this.themes){
+            this.themes.fontSize(fontSize + 'px');
         }
     }
+
 
 },
 mounted(){
