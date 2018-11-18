@@ -10,7 +10,7 @@
             </div>
 
         </div>
-        <menu-bar :ifTitleAndMenuSHow="ifTitleAndMenuSHow"></menu-bar>
+        <menu-bar :ifTitleAndMenuSHow="ifTitleAndMenuSHow" ref="menuBar"></menu-bar>
     </div>
 </template>
 <script>
@@ -46,7 +46,6 @@ methods: {
     },
     showEpub (){
         this.book = new Epub(DOWNLOAD_URL);
-        // console.log('this.book',this.book);
         this.rendition = this.book.renderTo('read',{
             width:window.innerWidth,
             height:window.innerHeight,
@@ -55,6 +54,9 @@ methods: {
     },
     toogleTitleAndMenu(){
         this.ifTitleAndMenuSHow = !this.ifTitleAndMenuSHow;
+        if(!this.ifTitleAndMenuSHow){
+            this.$refs.menuBar.hideSetting();
+        }
     }
 
 },

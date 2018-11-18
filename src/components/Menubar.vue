@@ -1,17 +1,21 @@
 
+import { fail } from 'assert';
 <template>
             <div class="menu-bar">
                 <transition name="slide-up">
-                    <div class="menu-wrapper" v-show="ifTitleAndMenuSHow">
+                    <div class="menu-wrapper" v-show="ifTitleAndMenuSHow" 
+                    :class="{'hide-box-shadow':ifSettingShow || !ifTitleAndMenuSHow}">
                         <div class="icon-wrapper">章节</div>
                         <div class="icon-wrapper">进度</div>
                         <div class="icon-wrapper">亮度</div>
-                        <div class="icon-wrapper">字体</div>
+                        <div class="icon-wrapper" v-on:click="showSetting">字体</div>
                     </div>
                 </transition>
-                <div class="setting-wrapper">
-                    <div class="setting-font-size"></div>
-                </div>
+                <transition name="slide-up">
+                    <div class="setting-wrapper" v-show="ifSettingShow">
+                        <div class="setting-font-size"></div>
+                    </div>
+                </transition>
             </div>
 </template>
 
@@ -19,6 +23,19 @@
     export default {
         props:{
             ifTitleAndMenuSHow:{type:Boolean,default:false}
+        },
+        data() {
+            return {
+                ifSettingShow: false
+            }
+        },
+        methods :{
+            showSetting(){
+                this.ifSettingShow = true;
+            },
+            hideSetting(){
+                this.ifSettingShow = false;
+            }
         }
 }
 </script>
@@ -38,9 +55,11 @@
             width: 100%;
             height: px2rem(60);
             background: white;
+            &.hide-box-shadow {
+                box-shadow: none;
+            }
             .icon-wrapper {
                 @include center;
-                // flex: 0 0 px2rem(250);
                 flex: 1;
                 }
 
@@ -51,10 +70,11 @@
             left: 0;
             width: 100%;
             height: px2rem(80);
-            // background: #000000;
-            .setting-font-size {
+            background: white;
+            box-shadow: 0 px2rem(-8) px2rem(8) rgba($color: #000000, $alpha: 0.15);
+            // .setting-font-size {
 
-            }
+            // }
         }
     }
 
