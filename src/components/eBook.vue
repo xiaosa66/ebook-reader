@@ -54,8 +54,8 @@
             name: 'default',
             style: {
               body: {
-                'color': '#000',
-                'background': '#fff'
+                'color': '#111',
+                'background': '#eee'
               }
             }
           },
@@ -63,7 +63,7 @@
             name: 'eye',
             style: {
               body: {
-                'color': '#000',
+                'color': '#111',
                 'background': '#ceeaba'
               }
             }
@@ -81,7 +81,7 @@
             name: 'love',
             style: {
               body: {
-                'color': '#000',
+                'color': '#111',
                 'background': 'pink'
               }
             }
@@ -151,6 +151,7 @@
 
       //切换主题
       setTheme(index) {
+        console.log('eBookIndex:',index)
         this.themes.select(this.themeList[index].name);
         this.defaultTheme = index;
       }
