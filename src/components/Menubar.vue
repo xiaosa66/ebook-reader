@@ -12,13 +12,7 @@ import { fail } from 'assert';
     </transition>
     <transition name="slide-up">
       <div class="setting-wrapper" v-show="ifSettingShow">
-        <div class="setting-chapter" v-if="showTag === 1">
-          <div class="setting-theme-item">
-            <div class="preview"></div>
-            <div class="text"></div>
-          </div>
-        </div>
-        <div class="setting-progress" v-else-if="showTag === 2">
+        <div class="setting-progress" v-if="showTag === 2">
           <div class="progress-wrapper">
             <input class="progress" type="range" max="100"
                    min="0" step="1"
@@ -31,7 +25,7 @@ import { fail } from 'assert';
             <span>{{bookAvailable ? progress + '%' : '加载中...'}}</span>
           </div>
         </div>
-        <div class="setting-theme" v-if="showTag === 3">
+        <div class="setting-theme" v-else-if="showTag === 3">
           <div class="setting-theme-item" @click="setTheme(index)"
                v-for="(item,index) in themeList" :key="index">
             <div class="preview" :style="{background:item.style.body.background}"></div>
@@ -54,14 +48,28 @@ import { fail } from 'assert';
           </div>
           <div class="preview" :style="{fontSize:fontSizeList[fontSizeList.length-1].fontSize+'px'}">A</div>
         </div>
-
       </div>
     </transition>
+    <transition name="slide-side">
+      <div class="setting-wrapper chapter-wrapper" v-show="ifNavigationShow">
+        <div class="setting-chapter" v-if="showTag === 1">
+
+          <div class="setting-chapter-item" v-for="(item,index) in navigation.toc" :key="index" @click="jumpTo(item.href)">
+            {{item.label}}
+
+          </div>
+        </div>
+      </div>
+    </transition>
+
   </div>
 </template>
 
 <script>
   export default {
+    // components:{
+    //   contentView
+    // },
     props: {
       ifTitleAndMenuSHow: {
         type: Boolean,
@@ -76,6 +84,9 @@ import { fail } from 'assert';
       themeList: {
         type: Array
       },
+      navigation: {
+        type: Object
+      },
       defaultTheme: Number,
       bookAvailable: Boolean,
     },
@@ -83,18 +94,33 @@ import { fail } from 'assert';
     data() {
       return {
         ifSettingShow: false,
+        ifNavigationShow: false,
+        ifSettingContent: false,
         showTag: 0,
         progress: 0
       }
     },
     methods: {
       showSetting(tag) {
-        this.ifSettingShow = true;
+        if (tag == 1) {
+          this.ifNavigationShow = true;
+        } else {
+          this.ifSettingShow = true;
+          this.ifNavigationShow = false;
+        }
         this.showTag = tag;
         console.log('showTag:', tag);
+
       },
       hideSetting() {
         this.ifSettingShow = false;
+        this.ifNavigationShow = false;
+      },
+      jumpTo(href) {
+        console.log(href);
+        this.$emit('jumpTo', href);
+        this.hideSetting();
+        this.onProgressInput();
       },
       setFontSize(fontSize) {
         this.$emit('setFontSize', fontSize);
@@ -111,8 +137,9 @@ import { fail } from 'assert';
       onProgressInput(progress) {
         console.log('onProgressInput', progress);
         this.progress = progress;
-        this.$refs.progress.style.backgroundSize = `${this.progress}%100`;
-      }
+        this.$refs.progress = progress;
+        // this.$refs.progress.style.backgroundSize = `${this.progress}%100`;
+      },
     }
   }
 </script>
@@ -121,7 +148,6 @@ import { fail } from 'assert';
   @import '../assets/styles/global';
 
   .menu-bar {
-
     .menu-wrapper {
       color: #333;
       font-size: 20px;
@@ -142,6 +168,17 @@ import { fail } from 'assert';
         flex: 1;
       }
 
+    }
+    .chapter-wrapper {
+      height: 80% !important;
+      padding: px2rem(20);
+      .setting-chapter {
+        font-size: px2rem(14);
+        &-item {
+          padding: px2rem(10);
+          border-bottom: px2rem(1) solid #eee;
+        }
+      }
     }
     .setting-wrapper {
       z-index: 101;
@@ -169,8 +206,8 @@ import { fail } from 'assert';
             width: 100%;
             -webkit-appearance: none;
             height: px2rem(2);
-            background:-webkit-linear-gradient(#999,#999) no-repeat, #ddd;
-            background-size:0 100%;
+            background: -webkit-linear-gradient(#999, #999) no-repeat, #ddd;
+            background-size: 0 100%;
             &:focus {
               outline: none;
             }
@@ -179,7 +216,7 @@ import { fail } from 'assert';
               border: px2rem(5) solid #eee;
               height: px2rem(14);
               width: px2rem(14);
-              color:#111;
+              color: #111;
               border-radius: 50%;
               background: #333;
               cursor: pointer;
@@ -285,6 +322,14 @@ import { fail } from 'assert';
           }
         }
       }
+    }
+    .content-mask {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: bisque;
     }
   }
 

@@ -20,6 +20,8 @@
       @setTheme='setTheme'
       :bookAvailable="bookAvailable"
       @onprocesschange="onProcessChange"
+      :navigation="navigation"
+      @jumpTo="jumpTo"
       ref="menuBar"></menu-bar>
   </div>
 </template>
@@ -92,7 +94,8 @@
         defaultTheme: 0,
         // 表示图书进度条是否已经可用
         bookAvailable:false,
-        progress:0
+        progress:0,
+        navigation:null
 
       }
     },
@@ -131,11 +134,14 @@
         this.setTheme(this.defaultTheme);
         //获取locations对象
         this.book.ready.then(()=>{
+          this.navigation = this.book.navigation;
+          console.log('this.navigation:',this.navigation);
           return this.book.locations.generate()
         }).then(result => {
           this.locations = this.book.locations;
           this.bookAvailable = true;
           // this.onProgressChange(80);
+          this.$refs.menuBar.onProgressInput();
         })
 
 
@@ -165,6 +171,16 @@
         console.log('eBookIndex:',index)
         this.themes.select(this.themeList[index].name);
         this.defaultTheme = index;
+      },
+      //章节跳转
+      jumpTo(href){
+        this.rendition.display(href);
+        this.hideTitleAndMenu();
+      },
+      hideTitleAndMenu(){
+        this.ifTitleAndMenuSHow = false;
+        // this.$refs.menubar.hideSetting();
+        // this.$refs.menubar.hideContent();
       },
       // params   progress  进度条数值  (0 ~ 100)
       // 跳转到某个进度
