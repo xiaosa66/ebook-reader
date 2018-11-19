@@ -19,7 +19,7 @@
       :defaultTheme='defaultTheme'
       @setTheme='setTheme'
       :bookAvailable="bookAvailable"
-      @onProgressChange='onProgressChange'
+      @onprocesschange="onProcessChange"
       ref="menuBar"></menu-bar>
   </div>
 </template>
@@ -92,6 +92,7 @@
         defaultTheme: 0,
         // 表示图书进度条是否已经可用
         bookAvailable:false,
+        progress:0
 
       }
     },
@@ -134,7 +135,7 @@
         }).then(result => {
           this.locations = this.book.locations;
           this.bookAvailable = true;
-          this.onProgressChange(100);
+          // this.onProgressChange(80);
         })
 
 
@@ -166,13 +167,19 @@
         this.defaultTheme = index;
       },
       // params   progress  进度条数值  (0 ~ 100)
-      onProgressChange(progress){
+      // 跳转到某个进度
+      /** TODO
+       * 不同于组件和 prop，事件名不会被用作一个 JavaScript 变量名或属性名，
+       * 所以就没有理由使用 camelCase 或 PascalCase 了。
+       * 并且 v-on 事件监听器在 DOM 模板中会被自动转换为全小写 (因为 HTML 是大小写不敏感的)，
+       * 所以 v-on:myEvent 将会变成 v-on:myevent——导致 myEvent 不可能被监听到。
+       * */
+      onProcessChange(progress){
+        console.log('Ebook onProgressChange',progress);
         const percentage = progress/100;
         const location = percentage > 0 ? this.locations.cfiFromPercentage(percentage) : 0;
         this.rendition.display(location)
       },
-
-
     },
     mounted() {
       page = this;

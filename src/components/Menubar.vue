@@ -83,7 +83,8 @@ import { fail } from 'assert';
     data() {
       return {
         ifSettingShow: false,
-        showTag: 0
+        showTag: 0,
+        progress:0
       }
     },
     methods: {
@@ -94,7 +95,6 @@ import { fail } from 'assert';
       },
       hideSetting() {
         this.ifSettingShow = false;
-        // console.log('showTag:',this.tag);
       },
       setFontSize(fontSize) {
         this.$emit('setFontSize', fontSize);
@@ -104,9 +104,12 @@ import { fail } from 'assert';
         this.$emit('setTheme', index);
       },
       onProcessChange(progress){
-        this.$emit('onProcessChange',progress);
+        console.log('onProcessChange',progress);
+        this.$emit('onprocesschange',progress);
       },
+      // 计算进度条数值
       onProgressInput(progress){
+        console.log('onProgressInput',progress);
         this.progress = progress;
         this.$refs.progress.style.backgroundSize = `${this.progress}%100`;
       }
