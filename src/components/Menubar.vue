@@ -25,7 +25,7 @@ import { fail } from 'assert';
                    @change="onProcessChange($event.target.value)"
                    @input="onProgressInput($event.target.value)"
                    :value="progress" :disabled="!bookAvailable"
-                    ref="progress">
+                   ref="progress">
           </div>
           <div class="text-wrapper">
             <span>{{bookAvailable ? progress + '%' : '加载中...'}}</span>
@@ -77,14 +77,14 @@ import { fail } from 'assert';
         type: Array
       },
       defaultTheme: Number,
-      bookAvailable:Boolean,
+      bookAvailable: Boolean,
     },
 
     data() {
       return {
         ifSettingShow: false,
         showTag: 0,
-        progress:0
+        progress: 0
       }
     },
     methods: {
@@ -103,13 +103,13 @@ import { fail } from 'assert';
         console.log('setTheme index:', index);
         this.$emit('setTheme', index);
       },
-      onProcessChange(progress){
-        console.log('onProcessChange',progress);
-        this.$emit('onprocesschange',progress);
+      onProcessChange(progress) {
+        console.log('onProcessChange', progress);
+        this.$emit('onprocesschange', progress);
       },
       // 计算进度条数值
-      onProgressInput(progress){
-        console.log('onProgressInput',progress);
+      onProgressInput(progress) {
+        console.log('onProgressInput', progress);
         this.progress = progress;
         this.$refs.progress.style.backgroundSize = `${this.progress}%100`;
       }
@@ -153,21 +153,48 @@ import { fail } from 'assert';
       background: white;
       border-bottom: px2rem(1) dashed #ccc;
       box-shadow: 0 px2rem(-8) px2rem(8) rgba($color: #000000, $alpha: 0.15);
-      setting-chapter {}
+      setting-chapter {
+      }
       .setting-progress {
         position: relative;
         width: 100%;
-        height: px2rem(2);
-        -webkit-appearance: none;
-        background: -webkit-linear-gradient(#999,#999) no-repeat #ddd;
-        background-size: 0 100%;
-        &:focus{
-          outline:none;
+        height: 100%;
+        .progress-wrapper {
+          height: 80%;
+          width: 100%;
+          @include center;
+          padding: 0 px2rem(30);
+          box-sizing: border-box;
+          .progress {
+            width: 100%;
+            -webkit-appearance: none;
+            height: px2rem(2);
+            background:-webkit-linear-gradient(#999,#999) no-repeat, #ddd;
+            background-size:0 100%;
+            &:focus {
+              outline: none;
+            }
+            &::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              border: px2rem(5) solid #eee;
+              height: px2rem(14);
+              width: px2rem(14);
+              color:#111;
+              border-radius: 50%;
+              background: #333;
+              cursor: pointer;
+              box-shadow: 0 px2rem(4) px2rem(4) rgba($color: #000000, $alpha: 0.15);
+            }
+          }
+        ;
         }
-        &::-webkit-slider-thumb{
-          -webkit-appearance: none;
-          height: px2rem(30);
-        };
+        .text-wrapper {
+          width: 100%;
+          height: 20%;
+          font-size: px2rem(14);
+          flex: 1;
+          @include center;
+        }
       }
       .setting-font-size {
         display: flex;
