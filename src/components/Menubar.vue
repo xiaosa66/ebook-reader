@@ -170,7 +170,7 @@ import { fail } from 'assert';
 
     }
     .chapter-wrapper {
-      height: 80% !important;
+      height: 60% !important;
       padding: px2rem(20);
       .setting-chapter {
         font-size: px2rem(14);

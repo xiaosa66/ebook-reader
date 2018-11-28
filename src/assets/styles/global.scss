@@ -10,17 +10,15 @@ $fontSize : 37.5;
     align-items: center;
 }
 
-
-
-
 .slide-down-enter,.slide-down-leave-to {
     transform: translate3d(0,-100%,0)
 }
-.slide-down-enter-to,.slide-down-leave,.slide-up-enter-to,.slide-side-enter-to,.slide-up-leave,.slide-side-leave {
+.slide-down-enter-to,.slide-down-leave,.slide-up-enter-to,
+.slide-side-enter-to,.slide-up-leave,.slide-side-leave {
     transform: translate3d(0,0,0)
 }
-.slide-down-enter-active,.slide-down-leave-active,
-.slide-up-enter-active,.slide-up-leave-active,.slide-side-enter-active,.slide-side-leave-active {
+.slide-down-enter-active,.slide-down-leave-active, .slide-up-enter-active,
+.slide-up-leave-active,.slide-side-enter-active,.slide-side-leave-active {
     transition: all 0.3s linear;
 }
 .slide-up-enter,.slide-up-leave-to,.slide-side-leave-to,.slide-side-enter {
